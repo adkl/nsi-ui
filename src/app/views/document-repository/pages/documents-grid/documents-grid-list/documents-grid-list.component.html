@@ -1,0 +1,58 @@
+<div id="gridStyle">
+    <div class="row" id="filtering">
+      <div class="col-md-12">
+        <span class="nameDecor"> Documents </span>
+      </div>
+    </div>
+      <div id="add_doc_btn">
+        <input type="file" id="fileElem" multiple style="display:none" (change)="handleFiles($event)">
+        <a class="btn btn-success" href="#" id="fileSelect"  (click)="clickMethod($event)">Add new document </a>
+        <iframe id="viewer" style="display: none;"></iframe>
+      </div>
+     <div class="row" id="filtering_options">
+      <div class="col-md-3 col-sm-3">
+        <p class="filter_p">Filter by extension:</p><select (change)="onFilterChange($event.target.value)" id="searchExtension">
+          <option *ngFor="let t of extensions">{{ t }}</option> 
+        </select>
+      </div>
+  
+        <div class="search col-md-3 col-sm-3">
+            <p class="filter_p">Filter by name:</p>
+          <span class="fa fa-search"></span>
+          <input type='text' [(ngModel)]='searchTerm' class="form-control" placeholder="Search" (input)="searchDocuments($event.target.value)" />
+        </div>
+     </div>
+        <div class="Table">
+          <div class="Table-body">
+            <ng-container>
+            <app-documents-grid-item *ngFor="let document of pagedItems" [document]="document" (newChange)="OnDeleteEmit()">
+              </app-documents-grid-item>
+             </ng-container> 
+          </div>
+        </div>
+  <div class="row">
+      <div class="col-md-12">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination" style="color: #20a8d8">
+          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+            <a (click)="setPage(1)" class="page-link">First</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+            <a (click)="setPage(pager.currentPage - 1)" class="page-link">
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
+            <a (click)="setPage(page)" class="page-link">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+            <a (click)="setPage(pager.currentPage + 1)" class="page-link">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+            <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
+          </li>
+        </ul>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+  displayName: 'Install Node.js'
+
+- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  displayName: 'Prepare analysis on SonarCloud'
+  inputs:
+    SonarCloud: SonarCloud
+    organization: nsi2018
+    scannerMode: CLI
+    configMode: manual
+    cliProjectKey: NSI.Angular
+    cliProjectName: NSI.UI
+    extraProperties: |
+      sonar.projectKey=NSI.Angular
+      sonar.organization=nsi2018
+      sonar.sources=.
+      sonar.exclusions=node_modules/**
+      sonar.host.url=https://sonarcloud.io
+      sonar.login=a4b2ca9e94782d24f88dcf1bc862f07a9ed9ae4a
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --configuration=dev
+  displayName: 'npm install and build'
+
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)/dist'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'

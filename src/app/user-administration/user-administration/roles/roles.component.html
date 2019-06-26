@@ -1,0 +1,273 @@
+
+<div class="card-body">
+    <div class="d-flex flex-row">
+        <div class="col-md-10">
+            <div class="input-group">
+                <input type="text" id="input1-group2" name="input1-group2" class="form-control" placeholder="Role" [(ngModel)]="searchTerm">
+                <span class="input-group-apend">
+                    <button type="button" class="btn btn-primary" (click)="loadRoles()"><i class="fa fa-search"></i> Search</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-3 mb-xl-0">
+                <a [routerLink]="['/users/rolesform']">
+            <button type="button" class="btn btn-block btn-ghost-primary active" aria-pressed="true" (click)="onOpenNewRoleForm()">
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i> New Role
+            </button>
+                </a>
+        </div>
+    </div>
+    <p></p>
+
+<div class="row">
+    <div class="col-sm-6 col-md-4" *ngFor="let role of activeRoles">
+        <div class="card card-accent-primary">
+            <div class="card-header">
+                <i class="fa fa-user-circle-o font-2xl"></i>
+                <b>{{role.name}}</b><br>
+                <a style="cursor:pointer"(click)="switch(role)">
+                    <span class="badge badge-primary float-right font-1xl">Active</span>
+                </a>
+                <a style="color: black;cursor:pointer" (click)="createPermissions(role)">
+                    <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <i class="icon-lock-open icons font-3xl col-md-3"></i>
+                    <div class="col-md-9">
+                        <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                            <option *ngFor="let perm of role.permissions" value=perm.id>{{perm.code}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4" *ngFor="let role of inactiveRoles">
+        <div  class="card card-accent-danger">
+            <div class="card-header">
+                <i class="fa fa-user-circle-o font-2xl"></i>
+                <b>{{role.name}}</b><br>
+                <a style="cursor:pointer"(click)="switch(role)">
+                    <span class="badge badge-danger float-right font-1xl">Inactive</span>
+                </a>
+                <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <i class="icon-lock-open icons font-3xl col-md-3"></i>
+                    <div class="col-md-9">
+                        <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                            <option *ngFor="let perm of role.permissions">{{perm.code}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-sm-6 col-md-4">
+        <div class="card card-accent-primary">
+            <div class="card-header">
+                <i class="fa fa-user-circle-o font-2xl"></i>
+                <b>Household</b><br>
+                <span class="badge badge-primary float-right font-1xl">Active</span>
+                <i class="fa fa-trash  float-right font-2xl" aria-hidden="true"></i>
+                <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <i class="icon-user-female icons font-3xl col-md-3"></i>
+                    <label class="col-form-label col-md-9">Selma Glavic</label>
+                </div>
+                <div class="form-group row">
+                    <i class="icon-calendar icons font-3xl col-md-3"></i>
+                    <label class="col-form-label col-md-9">2012/02/01</label>
+                </div>
+                <div class="form-group row">
+                    <i class="icon-lock-open icons font-3xl col-md-3"></i>
+                    <div class="col-md-9">
+                        <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                            <option value="1">Un/lock</option>
+                            <option value="2">Un/lock garage</option>
+                            <option value="3">Device management</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-accent-primary">
+            <div class="card-header">
+                <i class="fa fa-user-circle-o font-2xl"></i>
+                <b>Child</b><br>
+                <span class="badge badge-primary float-right font-1xl">Active</span>
+                <i class="fa fa-trash  float-right font-2xl" aria-hidden="true"></i>
+                <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <i class="icon-user icons font-3xl col-md-3"></i>
+                    <label class="col-form-label col-md-9">Semin Palalic</label>
+                </div>
+                <div class="form-group row">
+                    <i class="icon-calendar icons font-3xl col-md-3"></i>
+                    <label class="col-form-label col-md-9">2012/02/01</label>
+                </div>
+                <div class="form-group row">
+                    <i class="icon-lock-open icons font-3xl col-md-3"></i>
+                    <div class="col-md-9">
+                        <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                            <option value="1">Turn on/off tv</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+<!-- 
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-accent-danger">
+            <div class="card-header">
+                <i class="fa fa-user-circle-o font-2xl"></i>
+                <b>Elder</b><br>
+                <span class="badge badge-danger  float-right">Inactive</span>
+                <i class="fa fa-trash  float-right font-2xl" aria-hidden="true"></i>
+                <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <i class="icon-user icons font-3xl col-md-3"></i>
+                    <label class="col-form-label col-md-9">Eldar Tutundzic</label>
+                </div>
+                <div class="form-group row">
+                    <i class="icon-calendar icons font-3xl col-md-3"></i>
+                    <label class="col-form-label col-md-9">2012/03/01</label>
+                </div>
+                <div class="form-group row">
+                    <i class="icon-lock-open icons font-3xl col-md-3"></i>
+                    <div class="col-md-9">
+                        <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                            <option value="1">Kitchen appliances</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div> -->
+
+<!-- <nav>
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" [routerLink]="['/users/roles']">roles</a></li>
+        <li class="page-item active">
+            <a class="page-link" [routerLink]="['/users/roles']">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" [routerLink]="['/users/roles']">2</a></li>
+        <li class="page-item"><a class="page-link" [routerLink]="['/users/roles']">3</a></li>
+        <li class="page-item"><a class="page-link" [routerLink]="['/users/roles']">4</a></li>
+        <li class="page-item"><a class="page-link" [routerLink]="['/users/roles']">Next</a></li>
+    </ul>
+</nav> -->
+</div>
+
+
+
+<!--<div class="card">
+  <div class="card-header">
+      <i class="fa fa-users" aria-hidden="true"></i> All roles
+  </div>
+  <div class="card-body">
+          <div class="d-flex flex-row-reverse">
+          <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-3 mb-xl-0">
+                  <button type="button" class="btn btn-block btn-ghost-primary active" aria-pressed="true">
+                      <i class="fa fa-user-plus" aria-hidden="true"></i> New Role
+                  </button>
+              </div>
+          </div>
+          <p></p>
+      <table class="table table-bordered table-striped table-sm">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Permissions</th>
+                  <th>Creation date</th>
+                  <th>Users</th>
+                  <th>Status</th>
+                  <th>Edit/Delete</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Admin</td>
+                  <td>Un/lock door, Un/lock garage, Network management</td>
+                  <td>2012/01/01</td>
+                  <td>Lejla Bajgoric</td>
+                  <td>
+                      <span class="badge badge-success">Active</span>
+                  </td>
+                  <td>
+                      <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                  </td>
+              </tr>
+              <tr>
+                  <td>Household</td>
+                  <td>Un/lock door, Un/lock garage, Device Management</td>
+                  <td>2012/02/01</td>
+                  <td>Selma Glavic</td>
+                  <td>
+                        <span class="badge badge-success">Active</span>
+                  </td>
+                  <td>
+                      <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                  </td>
+              </tr>
+              <tr>
+                  <td>Child</td>
+                  <td>Turn on/off tv</td>
+                  <td>2012/02/01</td>
+                  <td>Semin Palalic</td>
+                  <td>
+                      <span class="badge badge-success">Active</span>
+                  </td>
+                  <td>
+                      <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                  </td>
+              </tr>
+              <tr>
+                  <td>Elder</td>
+                  <td>Kitchen appliances</td>
+                  <td>2012/03/01</td>
+                  <td>Eldar Tutundzic</td>
+                  <td>
+                    <span class="badge badge-danger">Inactive</span>
+                  </td>
+                  <td>
+                      <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                  </td>
+              </tr>
+             </tbody>
+      </table>
+      <nav>
+          <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="roles">Roles</a></li>
+              <li class="page-item active">
+                  <a class="page-link" href="users">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="roles">2</a></li>
+              <li class="page-item"><a class="page-link" href="roles">3</a></li>
+              <li class="page-item"><a class="page-link" href="roles">4</a></li>
+              <li class="page-item"><a class="page-link" href="roles">Next</a></li>
+          </ul>
+      </nav>
+  </div>
+</div>-->
+

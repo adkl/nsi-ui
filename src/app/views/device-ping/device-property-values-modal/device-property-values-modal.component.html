@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Device Property Values</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <table class="table table-striped">
+    <thead>
+      <tr class="d-flex">
+        <th class="col-4">Date Created</th>
+        <th class="col-3">Device name</th>
+        <th class="col-2">Property name</th>
+        <th class="col-3">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="d-flex" *ngFor="let pv of devicePropertyValues | paginate: { itemsPerPage: 3, currentPage: p }">
+        <td class="col-4">{{pv.dateCreated | date:'medium'}}</td>
+        <td class="col-3">{{pv.device.name}}</td>
+        <td class="col-2">{{pv.property.name}}</td>
+        <td class="col-3">{{pv.value}}</td>
+      </tr>
+     <pagination-controls (pageChange)="p = $event" class="logs-pagination"></pagination-controls>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-close" (click)="close()">Close</button>
+</div>

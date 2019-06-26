@@ -1,0 +1,73 @@
+
+<div class="col-sm-26 col-md-26">
+    <div class="card">
+      <div class="card-header">
+        Filter
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <strong>Tenant</strong>
+            <select class="form-control" id="tenant" [(ngModel)]="tenant">
+              <option *ngFor="let item of tenants" [value]="item.id" [selected]="item.id==tenant">{{item.description}}</option>
+            </select>
+          </div>
+          <div class="col-sm-4">
+                <button type="button" class="btn btn-primary" (click)="refreshResult()">Filter</button>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+
+<div class="card" *ngIf="showReport">
+  <div class="card-header">
+    Number of users per tenant
+    <div class="card-header-actions">
+    </div>
+  </div>
+  <div class="card-body row">
+    <table class="table col-md-6">
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Surname
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Status
+        </th>
+      </tr>
+      <tr *ngFor="let item of tenantData.users">
+        <td>
+          {{item.name}}
+        </td>
+        <td>
+          {{item.surname}}
+        </td>
+        <td>
+          {{item.email}}
+        </td>
+        <td>
+          <span [ngClass]="item.status == true ? 'badge badge-success' : 'badge badge-secondary'"> {{item.status == true ? 'Active' : 'Inactive' }} </span>
+        </td>
+      </tr>
+    </table>
+    <div class="chart-wrapper col-md-6">
+        <div class="chart-wrapper col-md-12">
+          <canvas baseChart class="chart"
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="pieChartType" >
+        </canvas>
+        </div>
+      </div>
+  </div>
+</div>
+<br>

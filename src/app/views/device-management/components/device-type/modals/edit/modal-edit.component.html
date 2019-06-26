@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12" style="padding: 15px;">
+      <form [formGroup]="deviceTypeForm" (ngSubmit)="onSave()">
+        <h3>Edit Device Type</h3>
+        <hr />
+        <div class="form-group">
+          <label>Name:</label>
+          <input class="form-control" type="text" name="name" placeholder="Enter name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+          />
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required" class="error-message">Name is required</div>
+            <div *ngIf="f.name.errors.minlength" class="error-message">Name must have at least 3 characters</div>
+            <div *ngIf="f.name.errors.maxlength" class="error-message">Name must have maximum 100 characters</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Code:</label>
+          <input class="form-control" type="text" name="code" placeholder="Enter code" formControlName="code" [ngClass]="{ 'is-invalid': submitted && f.code.errors }"
+          />
+          <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+            <div *ngIf="f.code.errors.required" class="error-message">Code is required</div>
+            <div *ngIf="f.code.errors.minlength" class="error-message">Code must have at least 2 characters</div>
+            <div *ngIf="f.code.errors.maxlength" class="error-message">Code must have maximum 5 characters</div>
+            <div *ngIf="f.code.errors.notUniqueCode" class="error-message">Code must be unique</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Device type actions:</label>
+          <ng-multiselect-dropdown name="action" [placeholder]="'Select actions'" [data]="actions" [settings]="actionDropdownSettings"
+            formControlName="actions">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="form-group">
+          <label>Device type properties:</label>
+          <ng-multiselect-dropdown name="property" [placeholder]="'Select properties'" [data]="properties" [settings]="propertyDropdownSettings"
+            formControlName="properties">
+          </ng-multiselect-dropdown>
+        </div>
+        <br>
+        <hr />
+        <br>
+        <input type="submit" name="submit" class="btn btn-primary float-right" value="Save" />
+      </form>
+      <form (ngSubmit)="onDelete()">
+        <input type="submit" name="submit" class="btn btn-danger" value="Delete" />
+        <input type="button" name="cancel" (click)="cancelEditing()" class="btn btn-warning cancel-button" value="Cancel" />
+      </form>
+    </div>
+  </div>
+</div>

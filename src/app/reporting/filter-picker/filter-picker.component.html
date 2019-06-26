@@ -1,0 +1,33 @@
+<div class="col-sm-26 col-md-26">
+  <div class="card">
+    <div class="card-header">
+      Filter
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <strong>Date From</strong>
+          <div class="form-group">
+            <input type="date" class="form-control" id="dateFrom" [ngModel]="dateFrom | date:'yyyy-MM-dd'" (ngModelChange)="dateFrom = $event" (keyup.enter)="submitForm()">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <strong>Date To</strong>
+          <div class="form-group">
+            <input type="date" class="form-control" id="dateTo" [ngModel]="dateTo | date:'yyyy-MM-dd'" (ngModelChange)="dateTo = $event" (keyup.enter)="submitForm()">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <strong>Tenant</strong>
+          <select class="form-control" id="tenant" [(ngModel)]="tenant">
+            <option *ngFor="let item of tenants" [value]="item.id" [selected]="item.id==tenant">{{item.description}}</option>
+          </select>
+        </div>
+        <div class="col-sm-4">
+              <button type="button" class="btn btn-primary" (click)="submitForm()">Filter</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

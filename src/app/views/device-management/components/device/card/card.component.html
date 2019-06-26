@@ -1,0 +1,20 @@
+<div class="card program-item" [routerLink]="">
+  <div class="program-card-block">
+    <img class="background" [src]=device.deviceImage alt="Device Image">
+    <div class="program-info-block">
+      <h4 class="card-title" [title]="device.name">
+        {{ device.name }}
+      </h4>
+      <p class="card-title" [title]="device.description">
+        {{ (device.description.length > 50)? (device.description | slice:0:50)+'...':(device.description) }}
+      </p>
+      <span *ngIf="device.isActive" class="cui-circle-check" aria-hidden="true"></span> 
+      <span *ngIf="!device.isActive" class="cui-circle-x" aria-hidden="true"></span> 
+      <div>
+        <u *ngIf="device.numberOfIncidents == 0">No incidents in last 7 days</u>
+        <u *ngIf="device.numberOfIncidents != 0">{{device.numberOfIncidents}} incidents in last 7 days</u>
+      </div>
+      <hr [ngClass]="status" />
+    </div>
+  </div>
+</div>

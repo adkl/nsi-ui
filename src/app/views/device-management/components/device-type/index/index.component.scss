@@ -1,0 +1,30 @@
+.action-list {
+  padding-left: 15px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.active-column {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+
+  .cui-circle-check {
+    color: green;
+  }
+
+  .cui-circle-x {
+    color: red;
+  }
+}
+
+.disabled-button{
+  cursor: not-allowed;
+}
+
+.width100 {
+  width: 100%;
+}

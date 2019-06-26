@@ -1,0 +1,57 @@
+<div class="col-sm-26 col-md-26">
+    <div class="card">
+      <div class="card-header">
+        Filter
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <strong>Number of devices</strong>
+            <select class="form-control" id="tenant" [(ngModel)]="filterCount">
+              <option value=0>All</option>
+              <option value=3>3</option>
+              <option value=5>5</option>
+              <option value=10>10</option>
+            </select>
+          </div>
+          <div class="col-sm-4">
+                <button type="button" class="btn btn-primary" (click)="applyFilter(this)">Filter</button>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+</div>
+  
+<div class="card" *ngIf="showReport">
+    <div class="card-body report-wrapper row">
+        <div class="card-body col-md-6">
+                <div class="chart-wrapper col-md-12">
+                    <canvas baseChart class="chart"
+                    [datasets]="secondPieChartData"
+                    [labels]="secondPieChartLabels"
+                    [chartType]="secondPieChartType">
+                    </canvas>
+                </div>
+            </div>
+        <div class="chart-wrapper col-md-6">
+            <div class="card col-sm-6 report-item" *ngFor="let item of allIncidents">
+                <div class="card-header" *ngIf="item?.devicesCount > 0">
+                    <b>Device name:</b> {{item.deviceTypeName}}
+                </div>
+                <div class="class-body" *ngIf="item?.devicesCount > 0" style="margin: 10px;">
+                    <b>Number of devices: </b>{{item.devicesCount}} <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="card-body row">
+        <div class="chart-wrapper col-md-12">
+            <canvas baseChart class="chart"
+            [datasets]="secondPieChartData"
+            [labels]="secondPieChartLabels"
+            [chartType]="secondPieChartType">
+            </canvas>
+        </div>
+    </div> -->
+</div>

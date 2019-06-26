@@ -1,0 +1,49 @@
+<app-filter-picker #appfilterpicker (apply)="applyFilter($event)"></app-filter-picker>
+
+<div class="col-sm-26 col-md-26" *ngIf="showError">
+    <alert type="danger">
+        <strong>Wrong dates!</strong> Date From is greater than Date To.
+      </alert>
+  </div>  
+
+<div class="card" *ngIf="showReport">
+  <div class="card-header">
+    Types of incidents in selected period
+    <div class="card-header-actions">
+      <!-- <a href="http://www.chartjs.org">
+          <small class="text-muted">docs</small>
+      </a> -->
+    </div>
+  </div>
+  <div class="card-body report-wrapper row">
+    <div class="chart-wrapper col-md-6">
+      <div class="card col-sm-6 report-item" *ngFor="let item of filteredIncidents">
+        <div class="card-header">
+          <b>Incident Type:</b> {{item.incidentTypeName}}
+        </div>
+        <div class="class-body" style="margin: 10px;">
+          <b>Date from: </b>{{item.timeFrom | date}} <br />
+          <b>Date to: </b>{{item.timeTo | date}} <br />
+          <b>Number of incidents: </b>{{item.numberOfIncidents}} <br />
+        </div>
+      </div>
+    </div>
+    <div class="chart-wrapper col-md-6">
+      <div class="chart-wrapper col-md-12">
+        <canvas baseChart class="chart"
+                [data]="firstPieChartData"
+                [labels]="firstPieChartLabels"
+                [chartType]="firstPieChartType" >
+      </canvas>
+      </div>
+    </div>
+  </div>
+ <!-- <div class="card-body row">
+    <div class="chart-wrapper col-md-6">
+      <canvas baseChart class="chart"
+              [datasets]="secondPieChartData"
+              [labels]="secondPieChartLabels"
+              [chartType]="secondPieChartType"></canvas>
+    </div>
+  </div>  -->
+</div>

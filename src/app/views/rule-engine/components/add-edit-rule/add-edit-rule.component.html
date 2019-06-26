@@ -1,0 +1,46 @@
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Rule</h4>
+        <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="col-6">
+              <label>Name</label>
+              <input [(ngModel)]="name" name="name" type="text" class="form-control" placeholder="Temperature Monitoring" required>
+              <p *ngIf="checkIfThereIsError('rule.Name')" class="text-danger">{{ errorMessage("rule.Name") }}</p>
+            </div>
+            <div class="col-6">
+              <label>Description</label>
+              <textarea name="description" [(ngModel)]="description" class="form-control" placeholder="Check that the temperature is within the allowed range."></textarea>
+              <p *ngIf="checkIfThereIsError('rule.Description')" class="text-danger">{{ errorMessage("rule.Description") }}</p>
+            </div>
+          </div>
+          <hr>
+          <div *ngFor="let condition of conditions; index as i" class="mb-2">
+            <app-condition [condition]="condition" (deleted)="deleteCondition(i)"></app-condition>
+          </div>
+          <p *ngIf="checkIfThereIsError('rule.Condition')" class="text-danger">{{ errorMessage("rule.Condition") }}</p>
+          <div class="text-right">
+            <button type="button" class="btn btn-success" (click)="addNewCondition()">Add a Condition</button>
+          </div>
+          <hr>
+          <div *ngFor="let action of actions" class="mb-2">
+            <app-action [action]="action"></app-action>
+          </div>
+          <p *ngIf="checkIfThereIsError('rule.Actions')" class="text-danger">{{ errorMessage("rule.Actions") }}</p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="storeRule()" [disabled]="loading">Save</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

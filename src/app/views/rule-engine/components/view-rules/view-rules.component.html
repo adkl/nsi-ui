@@ -1,0 +1,36 @@
+<div class="row align-items-center">
+  <div class="col">
+    <h1 class="mt-0 mb-0">Rule Engine</h1>
+  </div>
+
+  <div class="col flex-grow-0 text-nowrap">
+    <button type="button" class="btn btn-lg btn-success" data-toggle="modal" (click)="loadAddRuleModal()">
+      Add a Rule
+    </button>
+
+    <app-add-edit-rule #addRuleModal (added)="handleNewRule()"></app-add-edit-rule>
+  </div>
+</div>
+
+<div class="row mt-3 mb-3">
+  <div class="col-12">
+      <ngx-select-dropdown [multiple]="false" [(value)]="selectedDevices" [config]="selectionConfig" [options]="devices" (change)="filter($event)"></ngx-select-dropdown>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-4" *ngFor="let rule of rules">
+    <app-rule [rule]="rule" (deleted)="deleteRule(rule.ruleId)"></app-rule>
+  </div>
+</div>
+
+<nav>
+  <ul class="pagination justify-content-end">
+    <li [ngClass]="loading || currentPage === 1 ? 'page-item disabled' : 'page-item'">
+      <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+    </li>
+    <li [ngClass]="loading || currentPage >= totalPages ? 'page-item disabled' : 'page-item'">
+      <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+    </li>
+  </ul>
+</nav>

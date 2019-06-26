@@ -1,0 +1,180 @@
+<div class="animated fadeIn">
+  <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Device types
+        </div>
+        <div class="card-body">
+          <div class="search-wrapper">
+            <div class="row">
+              <!-- Table search -->
+              <div class="col-md-4">
+                <button class="btn btn-primary" (click)="openModal(createDeviceType)">Create device type</button>
+              </div>
+              <div class="col-md-6">
+                <div id="imaginary_container">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" #searchInput>
+                    <span class="input-group-append">
+                      <button class="btn btn-primary" type="submit" (click)="searchDeviceTypes(searchInput.value)">
+                        Search
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div id="imaginary_container"> 
+                    <div class="input-group">
+                        <span class="input-group-append width100">
+                          <select class="form-control" [(ngModel)]="selectedOption" (change)="onFilterDeviceTypesClick($event.target.value)">
+                            <option [value]="0" disabled selected>Filter device types</option>
+                            <option [value]="1">Active</option>
+                            <option [value]="2">Inactive</option>
+                          </select> 
+                        </span>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <!-- End table search -->
+          </div>
+          <div class="row">
+            <!-- notification -->
+            <div class="col-12" *ngIf="notificationDeleteShow">
+              <p class="alert alert-success">
+                Successfully deleted the device type.
+              </p>
+            </div>
+            <div class="col-md-12">
+              <!-- Device types table list -->
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        <a href="javascript:void(0)" (click)="sortToggleName()">
+                          Name
+                          <span *ngIf="sortingName">
+                            <span *ngIf="sortingNameASC; else descendingName">
+                              <span class="cui-sort-ascending" aria-hidden="true"></span>
+                            </span>
+                            <ng-template #descendingName>
+                              <span class="cui-sort-descending" aria-hidden="true"></span>
+                            </ng-template>
+                          </span>
+                        </a>
+                      </th>
+                      <th scope="col">
+                        <a href="javascript:void(0)"  (click)="sortToggleCode()">
+                          Code
+                          <span *ngIf="sortingCode">
+                            <span *ngIf="sortingCodeASC; else descendingCode">
+                              <span class="cui-sort-ascending" aria-hidden="true"></span>
+                            </span>
+                            <ng-template #descendingCode>
+                              <span class="cui-sort-descending" aria-hidden="true"></span>
+                            </ng-template>
+                          </span>
+                        </a>
+                      </th>
+                      <th scope="col">List of actions</th>
+                      <th scope="col">List of properties</th>
+                      <th scope="col" style="text-align: center;">
+                        <a href="javascript:void(0)"  (click)="sortToggleActivity()">
+                          Active
+                          <span *ngIf="sortingActivity">
+                            <span *ngIf="sortingActivityASC; else descendingActivity">
+                              <span class="cui-sort-ascending" aria-hidden="true"></span>
+                            </span>
+                            <ng-template #descendingActivity>
+                              <span class="cui-sort-descending" aria-hidden="true"></span>
+                            </ng-template>
+                          </span>
+                        </a>
+                      </th>
+                      <th scope="col" style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let type of types">
+                      <td>{{ type.name }}</td>
+                      <td>{{ type.code }}</td>
+                      <td>
+                        <ul class="list">
+                          <li *ngFor="let action of type.actions">
+                            <span *ngIf="action.isActive; else inactiveIcon">
+                              <span class="cui-circle-check" aria-hidden="true"></span>
+                            </span>
+                            <ng-template #inactiveIcon>
+                              <span class="cui-circle-x" aria-hidden="true"></span>
+                            </ng-template>
+                            {{ action.name }}
+                          </li>
+                        </ul>
+                      </td>
+                      <td>
+                        <ul class="list">
+                          <li *ngFor="let property of type.properties">
+                            <span *ngIf="property.isActive; else inactiveIcon">
+                              <span class="cui-circle-check" aria-hidden="true"></span>
+                            </span>
+                            <ng-template #inactiveIcon>
+                              <span class="cui-circle-x" aria-hidden="true"></span>
+                            </ng-template>
+                            {{ property.name }}
+                          </li>
+                        </ul>
+                      </td>
+                      <td class="active-column">
+                        <span *ngIf="type.isActive; else inactiveIcon">
+                          <span class="cui-circle-check" aria-hidden="true"></span>
+                        </span>
+                        <ng-template #inactiveIcon>
+                          <span class="cui-circle-x" aria-hidden="true"></span>
+                        </ng-template>
+                      </td>
+                      <td style="text-align: right;">
+                        <button class="btn btn-primary" (click)="initilizeDeviceType(type.deviceTypeId, editDeviceType)" [disabled]="!type.isActive" [ngClass]="{ 'disabled-button': !type.isActive }">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- End of device type table -->
+              <p class="alert alert-info" *ngIf="b">{{message}}</p>
+              <hr>
+              <!-- Pagination -->
+              <ul class="nav nav-pills">
+                <li class="nav-item" *ngFor="let p of pages;">
+                  <a class="nav-link" href="" (click)="setPage(p,$event)" [ngClass]="{'active':p==page}">{{p}}</a>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+
+<ng-template #createDeviceType>
+  <app-create-device-type [actions]="actions" [properties]="properties" [listOfTypes]="listOfTypes" (deviceTypeActioned)='getAllPagination()'
+    (canceledCreating)='closeModal()'>
+  </app-create-device-type>
+</ng-template>
+
+<ng-template #editDeviceType>
+  <app-edit-device-type [deviceType]="deviceType" [actions]="actions" [properties]="properties" [listOfTypes]="listOfTypes"
+    (deviceTypeActioned)='getAllPagination()' (deviceTypeDeleted)='notificationDelete()' (canceledEditing)='closeModal()'>
+  </app-edit-device-type>
+</ng-template>

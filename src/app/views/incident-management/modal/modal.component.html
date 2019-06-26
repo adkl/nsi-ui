@@ -1,0 +1,200 @@
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="max-width: 1100px !important; min-height: 600px !important;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center;">About INCIDENT</h4>
+        <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="container">
+              <div class="row" *ngIf="isLoading">
+                  <div class="col-md" style="height: 600px; vertical-align: center;">
+                    <h5 style="text-align: center;  width: 100%;">Waiting ...</h5>
+                  </div>
+              </div>
+              <div class="row" *ngIf="!isLoading">
+                <div class="col-md" style="border-right-width: 1px; border-right-style: solid; border-right-color: rgb(167, 167, 167)">
+                    <div class="row">
+                      <div class="col-md">
+                            <div class="card">
+                              <div class="card-header">
+                                Incident details
+                              </div>
+                              <div class="card-body">
+                                <div class="row" style="margin: 5px;">
+                                  <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                    <h6>Incident type: </h6>
+                                  </div>
+                                  <div class="col-md" style="padding: 0px !important;">
+                                    <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.incidentType.name}}</p>
+                                  </div>
+                                </div>
+                                <div class="row" style="margin: 5px;">
+                                    <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                        <h6>Incident status: </h6>
+                                    </div>
+                                    <div class="col-md" style="padding: 0px !important;">
+                                        <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.incidentStatus.name}}</p>
+                                    </div>
+                                </div>        
+                                <div class="row" style="margin: 5px;">
+                                    <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                        <h6>Incident priority: </h6>
+                                    </div>
+                                    <div class="col-md" style="padding: 0px !important;">
+                                        <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.priority.name}}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div *ngIf="disableSelect" class="row" style="margin-top: 20px !important; margin: 5px;">
+                                    <h6 style="margin-bottom: 5px !important;">Change Incident Status:</h6>
+                                    <select *ngIf="openMyModal" class="form-control" id="status" name="status" [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
+                                      <option *ngFor="let s of allStatus" [ngValue]="(s.incidentStatusId === selectedStatus.incidentStatusId) ? selectedStatus : s">
+                                                  {{s.name}}
+                                      </option>
+                                    </select>
+                                </div>
+                                <div *ngIf="disableSelect" class="row" style="margin-top: 20px !important; margin: 5px;">
+                                    <h6 style="margin-bottom: 5px !important;">Change Incident Priority:</h6>
+                                    <select *ngIf="openMyModal" class="form-control" [(ngModel)]="selectedPriority" [ngModelOptions]="{standalone: true}">
+                                        <option *ngFor="let p of allPriorities" [ngValue]="(p.priorityId === selectedPriority.priorityId) ? selectedPriority : p">
+                                                    {{p.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="row" style="margin: 5px !important; margin-top: 10px !important;">
+                                    <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                        <h6>Date created: </h6>
+                                    </div>
+                                    <div class="col-md" style="padding: 0px !important;">
+                                        <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{formatDateTime(incident.dateCreated)}}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row" style="margin: 5px !important; margin-top: 10px !important;">
+                                  <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                      <h6>Reporter: </h6>
+                                  </div>
+                                  <div class="col-md" style="padding: 0px !important;">
+                                      <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.reporter.fullName}}, {{incident.reporter.email}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+
+                    <div class="row">
+                        <div class="col-md">
+                              <div class="card">
+                                <div class="card-header">
+                                  Device details
+                                </div>
+                                <div class="card-body" style="margin: 5px !important;">
+                                  <div class="row">
+                                      <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                          <h6>Device name: </h6>
+                                      </div>
+                                      <div class="col-md" style="padding: 0px !important;">
+                                          <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.device.name}}</p>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                          <h6>Device identifier: </h6>
+                                      </div>
+                                      <div class="col-md" style="padding: 0px !important;">
+                                          <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.device.identifier}}</p>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                          <h6>Device description: </h6>
+                                      </div>
+                                      <div class="col-md" style="padding: 0px !important;">
+                                          <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.device.description}}</p>
+                                      </div>
+                                  </div>
+                                
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <!--<div  class="row"> 
+
+                          <div class="col-md">
+                              <div class="card">
+                                <div class="card-header">
+                                  Settlement details
+                                </div>
+                                <div class="card-body" style="margin: 5px !important; height: 195px;">
+                                  <div class="row">
+                                      <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                          <h6>Notification sent to tenant: </h6>
+                                      </div>
+                                      <div class="col-md" style="padding: 0px !important;">
+                                          <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.tenant.name}}</p>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                          <h6>Notification/Settlement text: </h6>
+                                      </div>
+                                      <div *ngFor="let w of allWorkOrders" class="col-md" style="padding: 0px !important;">
+                                          <p class="text-left" style="font-size: 17px" *ngIf="openMyModal && w.incidentId==incident.incidentId">
+                                            {{w.incidentSettlementId}}</p>
+                                      </div>
+                                  </div>
+                               
+                                </div>
+                              </div>
+                          </div>
+                       </div>
+                       -->
+                      <!--<div class="row"> 
+
+                          <div class="col-md">
+                              <div class="card">
+                                <div class="card-header">
+                                  Tenant details
+                                </div>
+                                <div class="card-body" style="margin: 5px !important; height: 195px;">
+                                  <div class="row">
+                                      <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                          <h6>Tenant name: </h6>
+                                      </div>
+                                      <div class="col-md" style="padding: 0px !important;">
+                                          <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.tenant.name}}</p>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md" style="padding: 0px !important; text-align: left;">
+                                          <h6>Tenant identifier: </h6>
+                                      </div>
+                                      <div class="col-md" style="padding: 0px !important;">
+                                          <p *ngIf="openMyModal" class="text-left" style="font-size: 17px">{{incident.tenant.identifier}}</p>
+                                      </div>
+                                  </div>
+                               
+                                </div>
+                              </div>
+                          </div>
+                       </div>-->
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Close</button>
+        <button *ngIf="openMyModal && disableSelect" type="button" class="btn btn-success" (click)="saveChanges(incident)">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

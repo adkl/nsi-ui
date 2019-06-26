@@ -1,0 +1,70 @@
+<div class="row justify-content-end">
+  <div class="col-3">
+    <button type="button" class="btn btn-dark btn-block" (click)="addPlaceholder()">Add placeholder</button>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-12">
+    <div class="card card-accent-primary">
+
+      <div class="card-header">
+        Placeholders
+      </div>
+
+      <div class="card-body">
+
+        <div class="row justify-content-center">
+          <div *ngIf="placeholders.length === 0" class="col-12">
+            <h5 class="noPlaceholderInfo">
+              There are no placeholders.
+            </h5>
+          </div>
+        </div>
+        <fieldset ngModelGroup="create-edit-template">
+          <div *ngFor="let p of placeholders" class="row justify-content-center">
+
+            <div class="col-2">
+              <label class="form-control">{{p.id}}</label>
+            </div>
+
+            <div class="col-3">
+              <div class="form-group">
+                <input #placeholderDesc="ngModel" class="form-control" type="text" name="description{{p.id}}"
+                  placeholder="Title..." [(ngModel)]="p.description" [ngClass]="{ 'is-invalid': placeholderDesc.invalid }"
+                  maxlength="100" required>
+                <div *ngIf="placeholderDesc.invalid" class="invalid-feedback">
+                  <div *ngIf="placeholderDesc.errors.required">Description is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <ng-select [searchable]="false" name="type{{p.id}}" [items]="types" [clearable]="false" [(ngModel)]="p.type">
+              </ng-select>
+            </div>
+
+            <div class="col-3">
+              <div class="form-group">
+                <input #placeholderType="ngModel" class="form-control" type="text" name="length{{p.id}}" placeholder="Length..."
+                  [(ngModel)]="p.length" [ngClass]="{ 'is-invalid': placeholderType.invalid }" pattern="\b^[1-9][0-9]?$|^100$\b"
+                  required>
+                <div *ngIf="placeholderType.invalid" class="invalid-feedback">
+                  <div *ngIf="placeholderType.errors.required">Length is required</div>
+                  <div *ngIf="placeholderType.errors.pattern">Length must be from 1 to 100</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="">
+              <button type="button" class="btn btn-dark btn-block" (click)="deletePlaceholder(p.id)">
+                <em class="cui-trash icons font-1xl"></em>
+              </button>
+            </div>
+
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div bsModal #myModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Incident Settlement</h4>
+        <button type="button" class="close" (click)="myModal1.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-header">
+            Settlement - Notification text
+          </div>
+
+          <div class="card-body">
+            <div class="row" style="margin: 5px;">
+              <div class="col-md" style="padding: 0px !important; text-align: left;">
+                <h6>Settlement description:</h6>
+              </div>
+              <div class="input-group">
+                <textarea class="form-control" [(ngModel)]="notificationContent"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="myModal1.hide()">Close</button>
+        <button type="button" class="btn btn-success" (click)="sendNotification(notificationContent, incident)">Send notification</button>
+      </div>
+    </div>
+  </div>
+</div>

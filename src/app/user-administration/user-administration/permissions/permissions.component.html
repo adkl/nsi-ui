@@ -1,0 +1,63 @@
+
+<div class="card-body">
+    <div class="d-flex flex-row">
+        <div class="col-md-10">
+            <div class="input-group">
+                <input type="text" id="input1-group2" name="input1-group2" class="form-control" placeholder="Permission" [(ngModel)]="searchTerm">
+                <span class="input-group-apend">
+                    <button type="button" class="btn btn-primary"(click)="loadPermissions()"><em class="fa fa-search"></em> Search</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-3 mb-xl-0">
+                <a [routerLink]="['/users/permissionform']">
+            <button type="button" class="btn btn-block btn-ghost-primary active" aria-pressed="true" (click)="onOpenNewPermissionForm()">
+                <i class="fa fa-certificate" aria-hidden="true"></i> New Permission
+            </button>
+                </a>
+        </div>
+    </div>
+    <p></p>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4" *ngFor="let permission of activePermissions">
+            <div class="card card-accent-primary">
+                <div class="card-header">
+                    <em class="fa fa-users font-2xl"></em>
+                    <strong>{{permission.code}}</strong> <br>
+                    <a style="cursor:pointer"(click)="switch(permission)">
+                        <span class="badge badge-primary float-right font-1xl">Active</span>
+                    </a>
+                    <a style="color: black;cursor:pointer" (click)="createRoles(permission)">
+                        <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4" *ngFor="let permission of inactivePermissions">
+            <div class="card card-accent-danger">
+                <div class="card-header">
+                    <em class="fa fa-users font-2xl"></em>
+                    <strong>{{permission.code}}</strong> <br>
+                    <a style="cursor:pointer"(click)="switch(permission)">
+                        <span class="badge badge-danger float-right font-1xl">Inactive</span>
+                    </a>
+                    <a style="color: black;cursor:pointer" (click)="createRoles(permission)">
+                        <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+
+<div class="row">
+    
+        
+    </div>
+
+</div>
+
+
+

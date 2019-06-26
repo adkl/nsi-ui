@@ -1,0 +1,23 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+// SCSS for template-manager module. Imported by Dario Pejcinovic
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.multiselect-dropdown > div > .dropdown-btn > .selected-item {
+    background-color: #20a8d8 !important;
+    border-color: #20a8d8 !important;
+    padding: 1px 6px !important;
+}
+.multiselect-item-checkbox > div:before {
+    border: 2px solid  #20a8d8 !important;
+}
+.multiselect-item-checkbox input[type=checkbox]:checked + div:before { 
+    background-color: #20a8d8 !important;
+}

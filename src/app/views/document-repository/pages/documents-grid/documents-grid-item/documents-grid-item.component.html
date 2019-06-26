@@ -1,0 +1,16 @@
+<div class="card-wrapper">
+    <div class="card">
+      <div class="card-header" style="text-align: center; background: lightgray; opacity: 0.9;">
+        {{ document.name }}
+      </div>
+      <div class="card-body">
+        <div class="imgDiv">
+          <img src="{{imageUrl}}" class="imgStyle" />
+        </div>
+      </div>
+      <button type="button" class="btn btn-warning btn-sm download-btn" (click)="onDownload(document)">
+        <span class="cui-cloud-download" aria-hidden="true"></span> Download
+      </button>
+      <span class="cui-circle-x delete-x-icon" aria-hidden="true" (click)="OnDelete()"></span> 
+    </div>
+</div>

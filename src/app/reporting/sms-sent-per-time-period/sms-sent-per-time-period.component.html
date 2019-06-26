@@ -1,0 +1,76 @@
+<div class="col-sm-26 col-md-26">
+  <div class="card">
+    <div class="card-header">
+      Filter
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <strong>Date From</strong>
+          <div class="form-group">
+            <input type="date" class="form-control" id="dateFrom" [ngModel]="dateFrom | date:'yyyy-MM-dd'" (change)="dateFromChanged($event)" (keyup.enter)="refreshResults()">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <strong>Date To</strong>
+          <div class="form-group">
+            <input type="date" class="form-control" id="dateTo" [ngModel]="dateTo | date:'yyyy-MM-dd'" (change)="dateToChanged($event)" (keyup.enter)="refreshResults()">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" (click)="refreshResults()">Filter</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-26 col-md-26" *ngIf="showError">
+  <alert type="danger">
+      <strong>Wrong dates!</strong> Date From is greater than Date To.
+    </alert>
+</div>
+
+<div class="card" *ngIf="showReport">
+    <div class="card-header">
+      Number of users per tenant
+      <div class="card-header-actions">
+      </div>
+    </div>
+    <div class="card-body row">
+      <table class="table col-md-6">
+        <tr>
+          <th>
+            From
+          </th>
+          <th>
+            To
+          </th>
+          <th>
+            Content
+          </th>
+        </tr>
+        <tr *ngFor="let item of smsData.sms">
+          <td>
+            {{item.from}}
+          </td>
+          <td>
+            {{item.phoneNumber}}
+          </td>
+          <td>
+            {{item.content}}
+          </td>
+        </tr>
+      </table>
+      <div class="chart-wrapper col-md-6">
+          <div class="chart-wrapper col-md-12">
+            <canvas baseChart class="chart"
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [chartType]="pieChartType" >
+          </canvas>
+          </div>
+        </div>
+    </div>
+  </div>

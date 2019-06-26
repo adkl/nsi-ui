@@ -1,0 +1,23 @@
+{
+  "dateCreated": null,
+  "ruleId": null,
+  "actionId": 1,
+  "deviceId": 5,
+  "deviceName": null,
+  "devicePropertyValues": [
+    {
+      "dateCreated": null,
+      "deviceId": 5,
+      "propertyId": 9,
+      "propertyName": null,
+      "devicePingId": 6,
+      "value": "Test Value 6",
+      "auditTrail": null,
+      "id": 6,
+      "tenantId": 1
+    }
+  ],
+  "auditTrail": null,
+  "id": 6,
+  "tenantId": 1
+}

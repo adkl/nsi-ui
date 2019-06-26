@@ -1,0 +1,82 @@
+
+<div class="card-body">
+        <div class="d-flex flex-row">
+            <div class="col-md-10">
+                <div class="input-group">
+                    <input type="text" id="input1-group2" name="input1-group2" class="form-control" placeholder="Name" [(ngModel)]="searchTerm">
+                    <span class="input-group-apend">
+                        <button type="button" class="btn btn-primary" (click)="loadUsers()"><em class="fa fa-search"></em> Search</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a [routerLink]="['/users/userform']">
+                    <button type="button" class="btn btn-block btn-ghost-primary active" aria-pressed="true">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i> New User
+
+                    </button>
+                </a>
+            </div>
+        </div>
+        <p></p>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4" *ngFor="let user of activeUsers">
+            <div class="card card-accent-primary">
+                <div class="card-header">
+                    <em class="icon-user font-2xl"></em>
+                    <strong>{{user.firstName}} {{user.lastName}}</strong><br>
+                    <a style="cursor:pointer"(click)="switch(user)">
+                        <span class="badge badge-primary float-right font-1xl">Active</span>
+                    </a>
+                    <a style="color: black;cursor:pointer" (click)="createRoles(user)">
+                        <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <em class="icon-envelope-letter icons font-3xl col-md-3"></em>
+                        <label class="col-form-label col-md-9">{{user.email}}</label>
+                    </div>
+                    <div class="form-group row">
+                        <em class="cui-people icons font-3xl col-md-3"></em>
+                        <div class="col-md-9">
+                            <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                                <option *ngFor="let role of user.roles" [value]="role.roleId">{{role.name}}</option>                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4" *ngFor="let user of inactiveUsers">
+                <div class="card card-accent-danger">
+                    <div class="card-header">
+                        <em class="icon-user-female font-2xl"></em>
+                        <strong>{{user.firstName}} {{user.lastName}}</strong><br>
+                        <a style="cursor:pointer"(click)="switch(user)">
+                            <span class="badge badge-danger float-right font-1xl">Inactive</span>
+                        </a>
+                        <a style="color: black;cursor:pointer" (click)="createRoles(user)">
+                            <i class="fa fa-pencil  float-right font-2xl" aria-hidden="true"></i>&nbsp;
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <em class="icon-envelope-letter icons font-3xl col-md-3"></em>
+                            <label class="col-form-label col-md-9">{{user.email}}</label>
+                        </div>
+                        <div class="form-group row">
+                            <em class="cui-people icons font-3xl col-md-3"></em>
+                            <div class="col-md-9">
+                                <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                                    <option *ngFor="let role of user.roles" [value]="role.roleId">{{role.name}}</option>                                
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+</div>

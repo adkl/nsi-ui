@@ -1,0 +1,75 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <collapsible-list [type]="'expandable'" class="shadow-none border">
+        <collapsible-list-item>
+          <collapsible-header class="waves-effect">
+            <strong>Filter Device Pings</strong>
+          </collapsible-header>
+          <collapsible-body [expanded]="true" class="collapsible-body shadow-none">
+            <div class="form-group mb-0">
+              <ng-multiselect-dropdown [placeholder]="'Filter by columns'" [data]="filterColumnsOptions" [(ngModel)]="selectedFilterColumns"
+                (onSelect)="filterColumnSelected($event)" (onDeSelect)="filterColumnDeSelected($event)" [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
+            </div>
+
+            <ng-container *ngFor="let fieldFormGroup of fieldsFormArray.controls; let i=index" [formGroup]="fieldFormGroup">
+              <ng-container *ngIf="fieldFormGroup.get('columnName').value == 'dateCreated'; else textInput">
+                <div class="input-group">
+                  <input type="date" class="form-control border mt-3" [placeholder]="fieldFormGroup.get('columnText').value" formControlName="value">
+                </div>
+              </ng-container>
+              <ng-template #textInput>
+                <div class="input-group">
+                  <input type="text" class="form-control border mt-3" [placeholder]="fieldFormGroup.get('columnText').value" formControlName="value">
+                </div>
+              </ng-template>
+            </ng-container>
+
+            <ng-container *ngIf="fieldsFormArray.controls.length > 0">
+              <button type="button" class="btn btn-primary mt-3" (click)="filterLogs()">Search</button>
+              <button type="button" class="btn btn-outline-primary mt-3 ml-2" (click)="clearFilters()">Clear</button>
+            </ng-container>
+          </collapsible-body>
+        </collapsible-list-item>
+      </collapsible-list>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped logs-table">
+        <thead>
+          <tr class="d-flex">
+            <th class="col text-left">Date Created</th>
+            <th class="col text-left">Device Name</th>
+            <th class="col text-left">Device Status</th>
+            <!-- <th class="col text-left">Rule</th> -->
+            <th class="col text-left">Action</th>
+            <th class="col text-left">Properties</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <div *ngIf="isLoading; else tableRows">
+            <div class="spinner-wrapper text-center col py-5">
+              <div class="lds-dual-ring"></div>
+            </div>
+          </div>
+          <ng-template #tableRows>
+            <tr class="d-flex" *ngFor="let log of logs | paginate: { itemsPerPage: pagingConfig.recordsPerPage, currentPage: pagingConfig.page, totalItems: pagingConfig.totalRecords }">
+              <td class="col text-left">{{log.dateCreated | date:'medium'}}</td>
+              <td class="col text-left">{{log.device.name}}</td>
+              <td class="col text-left">{{log.device.deviceStatus.name}}</td>
+              <!-- <td class="col text-left">{{log.ruleId}}</td> -->
+              <td class="col text-left">{{log.action?.name}}</td>
+              <td class="col text-left">
+                <button class="btn btn-primary" (click)="showDevicePropertyValues(log)">Show properties</button>
+              </td>
+            </tr>
+            <pagination-controls (pageChange)="loadPage($event)" class="logs-pagination"></pagination-controls>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

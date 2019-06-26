@@ -1,0 +1,142 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          All incidents
+        </div>
+        <div class="card-body">
+          <br>
+          <div class="col" *ngIf="isLoading">
+            <h5 style="text-align: center; width: 100%;">Loading ...</h5>
+          </div>
+          <div class="row" *ngIf="!isLoading">
+            <div class="col-3">
+              <label style="margin: auto; text-align: center; font-size: 14px;"> Filter by date: </label><br>
+              <input type="text" placeholder="Date" class="form-control" [(ngModel)]="selectedDate" #dp="bsDaterangepicker"
+                bsDaterangepicker>
+            </div>
+            <div class="col-3">
+              <label style="margin: auto; text-align: center; font-size: 14px;"> Filter by priority: </label><br>
+              <select class="form-control" id="filter1" name="status" [(ngModel)]="selectedPriority" [ngModelOptions]="{standalone: true}">
+                <option value="none" ng-reflect-value="0">All</option>
+                <option *ngFor="let f of allPriorities" [ngValue]="f">
+                  {{f.name}}
+                </option>
+              </select>
+            </div>
+            <div class="col-3">
+              <label style="margin: auto; text-align: center; font-size: 14px;"> Filter by status: </label><br>
+              <select class="form-control" id="filter2" name="status" [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
+                <option value="none" ng-reflect-value="0">All</option>
+                <option *ngFor="let f of allStatus" [ngValue]="f">
+                  {{f.name}}
+                </option>
+              </select>
+            </div>
+            <div class="col-3">
+              <label style="margin: auto; text-align: center; font-size: 14px;"> Filter by type: </label>
+              <br>
+              <select class="form-control" id="filter3" name="status" [(ngModel)]="selectedType" [ngModelOptions]="{standalone: true}">
+                <option value="none" ng-reflect-value="0">All</option>
+                <option *ngFor="let f of allTypes" [ngValue]="f">
+                  {{f.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row justify-content-md-end" *ngIf="!isLoading">
+            <div class="col-3">
+              <br>
+              <button type="button" class="btn btn-primary" data-toggle="modal" (click)="getIncidentsByFilterValue()"
+                style=" width:50%">
+                Search
+              </button>
+              <button type="button" class="btn btn-outline-primary" data-toggle="modal" (click)="clearFields()" style="margin-left: 5%;  width:45%">
+                Clear
+              </button>
+            </div>
+          </div>
+          <br>
+          <br>
+          <table class="table table-responsive-sm table-hover table-outline mb-0" style=" margin: auto;" *ngIf="!isLoading">
+            <thead class="thead-light">
+              <tr>
+                <th class="text-left">Incident type</th>
+                <th class="text-left">Date created<button (click)="sortByDate()" style="float: right; background-color: transparent; border-color: transparent"><em
+                      class="fa fa-angle-down" *ngIf="!sortDateUp"></em> <em class="fa fa-angle-up" *ngIf="sortDateUp"></em>
+                  </button></th>
+                <th class="text-left">Priority<button (click)="sortByPriority()" style="float: right; background-color: transparent; border-color: transparent"><em
+                      class="fa fa-angle-down" *ngIf="!sortPriorityUp"></em> <em class="fa fa-angle-up" *ngIf="sortPriorityUp"></em></button></th>
+                <th class="text-left">Status<button (click)="sortByStatus()" style="float: right;  background-color: transparent;  border-color: transparent"><em
+                      class="fa fa-angle-down" *ngIf="!sortStatusUp"></em> <em class="fa fa-angle-up" *ngIf="sortStatusUp"></em></button></th>
+                <th class="text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="!isLoading">
+              <tr *ngFor="let incident of incidents | paginate: { itemsPerPage: pagingConfig?.itemsPerPage, currentPage: pagingConfig?.currentPage }; let i = index">
+                <td class="text-left">
+                  <span>{{incident.incidentType.name}}</span>
+                </td>
+                <td class="text-left">
+                  <span>{{formatDateTime(incident.dateCreated)}}</span>
+                </td>
+                <td>
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <strong>{{incident.priority.name}}</strong>
+                    </div>
+                  </div>
+                  <div class="progress progress-xs" *ngIf="incident.priority.name === 'Low'">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="50"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="progress progress-xs" *ngIf="incident.priority.name === 'Middle'">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="50"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="progress progress-xs" *ngIf="incident.priority.name === 'High'">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="50"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </td>
+                <td class="text-left">
+                  <div *ngIf="incident.incidentStatus.name === 'Solved'">
+                    <span class="badge badge-success ">{{incident.incidentStatus.name}}</span>
+                  </div>
+                  <div *ngIf="incident.incidentStatus.name === 'Unsolved'">
+                    <span class="badge badge-danger ">{{incident.incidentStatus.name}}</span>
+                  </div>
+                  <div *ngIf="incident.incidentStatus.name === 'New'">
+                    <span class="badge badge-primary ">{{incident.incidentStatus.name}}</span>
+                  </div>
+                  <div *ngIf="incident.incidentStatus.name === 'In progress'">
+                    <span class="badge badge-warning ">{{incident.incidentStatus.name}}</span>
+                  </div>
+                </td>
+                <td class="text-left">
+                  <em class="cui-magnifying-glass" data-toggle="modal" (click)="loadViewIncidentModal(incident)"></em>
+                  <app-modal #viewIncidentModal (changed)="updateIncidents($event)"></app-modal>
+                  <em class="cui-wrench" *ngIf="incident.incidentStatus.name!=isSolved" data-toggle="modal" (click)="loadSettlementModal(incident)"
+                    style="margin-left: 20px;"></em>
+                  <app-settlement-modal #viewSettlementModal (changed)="updateIncidents($event)"></app-settlement-modal>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row" *ngIf="incidents.length === 0 && !isLoading">
+            <div class="col-2" style="margin: auto">
+              <p style="margin: auto; text-align: center; margin-top: 30px; font-size: 17px; color: #585858;"> No results.</p>
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="btn-group pull-right" *ngIf="!isLoading">
+            <pagination-controls (pageChange)="pagingConfig.currentPage = $event" class="logs-pagination"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="form-row">
+  <div class="col-3">
+    <select [(ngModel)]="condition.deviceId" class="form-control" (change)="findDeviceType()">
+      <option value="0" selected disabled>Select the Device</option>
+
+      <option *ngFor="let device of devices" [value]="device.deviceId">
+        {{ device.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-3">
+    <select [(ngModel)]="condition.parameterId" class="form-control" [disabled]="!condition.deviceId">
+      <option value="0" selected disabled>Select the Parameter</option>
+
+      <option *ngFor="let property of properties" [value]="property.propertyId">
+        {{ property.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-2">
+    <select [(ngModel)]="condition.comparisonOperator" class="form-control" [disabled]="!condition.parameterId">
+      <option value="" disabled selected>Comparison Operator</option>
+      <option value="<">&lt;</option>
+      <option value=">">&gt;</option>
+      <option value="=">=</option>
+      <option value="<=">&lt;=</option>
+      <option value=">=">&gt;=</option>
+      <option value="<>">&lt;&gt;</option>
+    </select>
+  </div>
+  <div class="col-3">
+    <input [(ngModel)]="condition.parameterValue" type="text" class="form-control" placeholder="Baseline Value" [disabled]="!condition.parameterId">
+  </div>
+  <div class="col-1">
+    <button type="button" class="btn btn-danger w-100" (click)="deleted.emit()">
+      <i class="icon-trash"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title mt-0 mb-0">{{ rule.name }}</h5>
+      </div>
+
+      <div class="col-auto text-right">
+        <app-delete-rule (confirmed)="deleted.emit()"></app-delete-rule>
+      </div>
+    </div>
+
+    <div class="row mt-2 mb-2">
+      <div class="col-12">
+        <p *ngIf="showDescription" class="card-text">{{ rule.description }}</p>
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-4">
+        <button type="button" (click)="showConditions = !showConditions" class="btn btn-warning w-100">
+          <em class="cui-settings"></em>
+        </button>
+      </div>
+      <div class="col-4">
+        <button type="button" (click)="showActions = !showActions" class="btn btn-dark w-100">
+          <em class="cui-speedometer"></em>
+        </button>
+      </div>
+      <div class="col-4">
+        <button type="button" (click)="showDescription = !showDescription" class="btn btn-primary w-100">
+          <em class="cui-info"></em>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-2" *ngIf="showConditions">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h5>Conditions</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Device</th>
+                  <th scope="col">Property</th>
+                  <th scope="col">Operator</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let condition of rule.conditions">
+                  <th scope="row">{{ condition.device.name }}</th>
+                  <td>{{ condition.property.name }}</td>
+                  <td>{{ condition.comparisonOperator }}</td>
+                  <td>{{ condition.comparisonValue }}</td>
+                </tr>
+                <tr *ngIf="!rule.conditions.length">
+                    <th class="text-center" scope="row" colspan="4">No values</th>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-2" *ngIf="showActions">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h5>Actions</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Device</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let action of rule.actions">
+                <th scope="row">{{ action.device.name }}</th>
+                <td>{{ action.action.name }}</td>
+              </tr>
+              <tr *ngIf="!rule.actions.length">
+                  <th class="text-center" scope="row" colspan="2">No values</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

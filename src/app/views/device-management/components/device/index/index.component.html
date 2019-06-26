@@ -1,0 +1,96 @@
+<div class="animated fadeIn">
+  <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Your Devices
+        </div>
+        <div class="card-body">
+         <div class="search-wrapper">
+            <div class="row">
+              <!-- Table search -->
+              <div class="col-md-4">
+                <button class="btn btn-primary" (click)="openModal(createDevice)">Create device</button>
+              </div>
+              <div class="col-md-6">
+                <div id="imaginary_container"> 
+                    <div class="input-group">
+                        <input type="text" class="form-control"  placeholder="Search" #searchInput >
+                        <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit" (click)="searchdevices(searchInput.value)">
+                              Search
+                            </button>  
+                        </span>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div id="imaginary_container"> 
+                    <div class="input-group">
+                        <span class="input-group-append width100">
+                          <select class="form-control" [(ngModel)]="selectedOption" (change)="onFilterDevicesClick($event.target.value)">
+                            <option [value]="0" disabled selected>Filter devices</option>
+                            <option [value]="1">Active</option>
+                            <option [value]="2">Inactive</option>
+                          </select> 
+                        </span>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <!-- End table search -->
+          </div>
+          <div class="row">
+           <!-- notification -->
+            <div class="col-12" *ngIf="notificationDeleteShow">
+              <p class="alert alert-success">
+                Successfully deleted the device.
+              </p>
+            </div>
+          </div>
+          <div class="row is-flex">
+            <app-device-card 
+              class="col-md-4 col-sm-4 col-12"
+              *ngFor="let device of devices"
+              (click)="initilizeDevice(device.deviceId, editDevice)"
+              [device]="device">
+            </app-device-card>
+          </div>
+          <p class="alert alert-info" *ngIf="b">{{message}}</p>
+          <hr>
+              <!-- Pagination -->
+              <ul class="nav nav-pills">  
+                <li class="nav-item" *ngFor="let p of pages;" >
+                  <a class="nav-link" href="" (click)="setPage(p,$event)"[ngClass]="{'active':p==page}">{{p}}</a>
+                </li>
+              </ul>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+
+<ng-template #createDevice>
+  <app-create-device
+    [types]="types"
+    (deviceActioned)='getAllPagination()'
+    (canceledCreating)='closeModal()'
+    >
+  </app-create-device>
+</ng-template>
+
+<ng-template #editDevice>
+  <app-edit-device
+    [device]="device"
+    [types]="types"
+    (deviceActioned)='getAllPagination()'
+    (deviceDeleted)='notificationDelete()'
+    (canceledEditing)='closeModal()'
+    >
+  </app-edit-device>
+</ng-template>

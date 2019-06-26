@@ -1,0 +1,54 @@
+<div class="card">
+  <div *ngIf="edit" class="card-header">
+    <i class="fa fa-user-o" aria-hidden="true"></i> Edit User
+</div>
+<div *ngIf="!edit" class="card-header">
+  <i class="fa fa-user-o" aria-hidden="true"></i> Add User    
+</div>
+    <div class="card-body">
+        <form name="form" (ngSubmit)="onSubmit()" #f="ngForm">
+          <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><em class="fa fa-user"></em></span>
+                  </div>
+                  <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First name" [(ngModel)]="model.firstName" #firstName="ngModel">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><em class="fa fa-user"></em></span>
+                  </div>
+                  <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last name" [(ngModel)]="model.lastName" #lastName="ngModel">
+                </div>
+            </div>
+            <div *ngIf="!edit" class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><em class="fa fa-envelope"></em></span>
+                </div>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" autocomplete="email" [(ngModel)]="model.email" #email="ngModel">
+              </div>
+            </div>
+
+          </div>
+          <div class="col-6">
+              <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="select2">Roles:</label>
+                      <select id="roleMember" name="roleMember" class="form-control" size="4" multiple  [(ngModel)]="model.roleMember" #roleMember="ngModel">
+                          <option *ngFor="let role of activeRoles" [value]="role.roleInfoId">{{role.name}}</option>
+                      </select>
+                      
+              </div>
+              <div class="form-group form-actions">
+                  <button type="submit" class="btn btn-primary float-right">Submit</button>
+                </div>
+          </div>
+        </div>
+        </form>
+
+    </div>
+</div>

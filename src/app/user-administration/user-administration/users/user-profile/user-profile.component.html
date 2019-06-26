@@ -1,0 +1,230 @@
+<div class="card-body">
+  <div class="row" *ngFor="let u of user">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <blockquote class="card-bodyquote">
+            <strong class="h3">{{u.firstName}} {{u.lastName}}</strong> 
+            <br>
+            <small class="text-muted">{{u.email}}</small>
+          </blockquote>
+        </div>
+        <div class="card-body">
+          <div class="callout callout-info">
+            <strong class="h4">General info</strong>
+          </div>
+          <form action="" method="post" class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label" for="name">First Name </label>
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="name" placeholder="{{u.firstName}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label" for="name">Last Name</label>
+              <div class="col-md-8">
+                <input type="text" class="form-control" id="name" placeholder="{{u.lastName}}">
+              </div>
+            </div>
+            <!-- <div class="form-group row">
+              <label class="col-md-4 col-form-label" for="hf-email">Email</label>
+              <div class="col-md-8">
+                <input type="email" id="hf-email" name="hf-email" class="form-control" placeholder="lejlabajgoric@mail.com" autocomplete="email">
+                </div>
+            </div> -->
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Roles</label>
+              <div class="col-md-8">
+                <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                    <option *ngFor="let role of u.roles" [value]="role.roleId">{{role.name}}</option> 
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Permissions</label>
+                <div class="col-md-8">
+                    <select id="multiple-select" name="multiple-select" class="form-control" size="4" multiple>
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Status</label>
+              <div class="col-md-8">
+                  <label class="switch switch-label switch-pill switch-primary">
+                    <input type="checkbox" class="switch-input" checked>
+                    <span class="switch-slider" data-checked="ON" data-unchecked="OFF"></span>
+                  </label>
+              </div>
+            </div>
+            <div class="form-group form-actions">
+              <button type="submit" class="btn btn-primary float-right"><em class="fa fa-dot-circle-o"></em> Submit</button>
+              <button type="reset" class="btn btn-secondary float-right"><em class="fa fa-ban"></em> Reset</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div><!--/.col-->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <roles-form></roles-form>
+            </div>
+        </div>
+    </div> 
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <permission-form></permission-form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-8">
+      <div class="row">
+        <div class="card">
+          <div class="card-header">
+              <strong class="h4">Dashboard</strong> 
+          </div>
+          <div class="card-body">
+            <div class="callout callout-info">
+              <strong class="h4">Roles</strong>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" id="input1-group2" name="input1-group2" class="form-control" placeholder="Role">
+                            <span class="input-group-apend">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-3 mb-xl-0">
+                        <button type="button" class="btn btn-block btn-ghost-primary active" aria-pressed="true">
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i> New Role
+                        </button>
+                    </div>
+                </div>
+                <p></p>
+            
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="card card-accent-primary">
+                        <div class="card-header">
+                            Admin
+                            <span class="badge badge-primary float-right">Active</span>
+                            <i class="fa fa-trash  float-right font-1xl" aria-hidden="true"></i>
+                            <i class="fa fa-pencil  float-right font-1xl" aria-hidden="true"></i>&nbsp;
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <i class="icon-lock-open icons font-1xl col-md-1"></i>
+                                <div class="col-md-10">
+                                    <select id="multiple-select" name="multiple-select" class="form-control" size="3" multiple>
+                                        <option value="1">Un/lock</option>
+                                        <option value="2">Un/lock garage</option>
+                                        <option value="3">Network management</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card card-accent-primary">
+                        <div class="card-header">
+                            Household
+                            <span class="badge badge-primary float-right font-1xl">Active</span>
+                            <i class="fa fa-trash  float-right font-1xl" aria-hidden="true"></i>
+                            <i class="fa fa-pencil  float-right font-1xl" aria-hidden="true"></i>&nbsp;
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <i class="icon-lock-open icons font-1xl col-md-1"></i>
+                                <div class="col-md-10">
+                                    <select id="multiple-select" name="multiple-select" class="form-control" size="3" multiple>
+                                        <option value="1">Un/lock</option>
+                                        <option value="2">Un/lock garage</option>
+                                        <option value="3">Device management</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card card-accent-primary">
+                        <div class="card-header">
+                            Child
+                            <span class="badge badge-primary float-right font-1xl">Active</span>
+                            <i class="fa fa-trash  float-right font-1xl" aria-hidden="true"></i>
+                            <i class="fa fa-pencil  float-right font-1xl" aria-hidden="true"></i>&nbsp;
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <i class="icon-lock-open icons font-1xl col-md-1"></i>
+                                <div class="col-md-10">
+                                    <select id="multiple-select" name="multiple-select" class="form-control" size="3" multiple>
+                                        <option value="1">Turn on/off tv</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="card card-accent-danger">
+                        <div class="card-header">
+                            Elder
+                            <span class="badge badge-danger  float-right">Inactive</span>
+                            <i class="fa fa-trash  float-right font-1xl" aria-hidden="true"></i>
+                            <i class="fa fa-pencil  float-right font-1xl" aria-hidden="true"></i>&nbsp;
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <i class="icon-lock-open icons font-1xl col-md-1"></i>
+                                <div class="col-md-10">
+                                    <select id="multiple-select" name="multiple-select" class="form-control" size="3" multiple>
+                                        <option value="1">Kitchen appliances</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                </div>
+            
+              <nav>
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="users">roles</a></li>
+                    <li class="page-item active">
+                        <a class="page-link" href="users">1</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="users">2</a></li>
+                    <li class="page-item"><a class="page-link" href="users">3</a></li>
+                    <li class="page-item"><a class="page-link" href="users">4</a></li>
+                    <li class="page-item"><a class="page-link" href="users">Next</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="callout callout-info">
+              <strong class="h4">Add role</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div> -->
+    <!--/.col-->
+    
+    
+  </div><!--/.row-->
+  
+
+</div>
+

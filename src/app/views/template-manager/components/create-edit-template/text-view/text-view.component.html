@@ -1,0 +1,14 @@
+<div class="row justify-content-between">
+  <div class="col-2">
+    <label>Template content: </label>
+  </div>
+  <div class="col-10">
+
+    <textarea #templateContent="ngModel" name="templateContent" class="form-control" rows="10" placeholder="Enter content..."
+      (ngModelChange)="ngOnChanges()" [(ngModel)]="content" [ngClass]="{ 'is-invalid': empty || extraPlaceholder }"></textarea>
+    <div class="invalid-feedback">
+      <div *ngIf="empty">Content is required</div>
+      <div *ngIf="extraPlaceholder">Content cannot contain unknown placeholder</div>
+    </div>
+  </div>
+</div>

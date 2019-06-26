@@ -1,0 +1,25 @@
+<div class="form-row">
+  <div class="col-3">
+    <select [(ngModel)]="action.deviceId" class="form-control" (change)="fetchActions()">
+      <option value="0" selected disabled>Select the Device</option>
+
+      <option *ngFor="let device of devices" [value]="device.deviceId">
+        {{ device.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-3">
+    <select [(ngModel)]="action.actionId" class="form-control">
+      <option value="0" disabled selected>Select the Action</option>
+
+      <option *ngFor="let action of actions" [value]="action.actionId">
+        {{ action.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-6">
+    <div *ngFor="let parameter of action.properties" class="mb-2">
+      <app-parameter-setting [parameter]="parameter"></app-parameter-setting>
+    </div>
+  </div>
+</div>

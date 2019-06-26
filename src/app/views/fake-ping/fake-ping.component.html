@@ -1,0 +1,83 @@
+<div class="row">
+ <div class="col-md-6">
+   <div id="imaginary_container">
+     <div class="input-group">
+       <input type="text" class="form-control"  placeholder="Search" [(ngModel)]='searchTerm'>
+     </div>
+   </div>
+ </div>
+
+ <div class="col-md-3">
+   <div id="imaginary_container">
+     <div class="input-group">
+         <select class="form-control" (change)="onFilterChanged($event.target.value)">
+           <option [value]="0" disabled selected>Filter devices</option>
+           <option >Active</option>
+           <option >Inactive</option>
+           <option>All</option>
+         </select>
+     </div>
+   </div>
+ </div>
+
+ <div class="col-md-3">
+   <div id="imaginary_container">
+     <div class="input-group float-right">
+         <select class="form-control" (change)="onFilterChange($event.target.value)">
+           <option [value]="0" disabled selected>Sort devices</option>
+           <option >Ascending</option>
+           <option >Descending</option>
+         </select>
+     </div>
+   </div>
+ </div>
+</div>
+<br>
+
+<div class = "row" style="height: 22em;">
+ <div class="col-md-4" *ngFor="let ping of pings" style="width: 22em;">
+   <div class="card">
+     <div class="card-body">
+       <h5 class="card-title">{{ping.name}}</h5>
+       <p class="card-title">Description: {{ping.description}}</p>
+       <span *ngIf="ping.isActive" class="cui-circle-check float-right" style="color: green; font-weight: bold; font-size: 20px;" aria-hidden="true"></span>
+       <span *ngIf="!ping.isActive" class="cui-circle-x float-right" style="color: red; font-weight: bold; font-size: 20px;" aria-hidden="true"></span>
+
+       <br>
+       <br>
+
+       <div id="{{ping.deviceId}}" >
+         <div class="form-group row" >
+           <div class="col-md-6">
+               <select (change)="collectData($event, ping.name)" class="form-control">
+                 <option disabled selected value>-- property --</option>
+                 <option *ngFor="let p of properties" [value]="p.propertyId">
+                     {{p.name}}
+                 </option>
+               </select>
+           </div>
+           <div class="col-md-6">
+               <input type="text" class="form-control" (focusout)="focusOut($event)" placeholder="Enter value" id = "{{ping.name}}" >
+           </div>
+         </div>
+       </div>
+
+ <br>
+
+ <div class=" row">
+       <div class="col-md-6 ">
+         <div class="btn-group float-left">
+           <button type="button" class="btn btn-primary btn-lg" (click)="addField(ping.deviceId)">+</button>
+         </div>
+       </div>
+       <div class="col-md-6 ">
+         <div class="btn-group float-right">
+           <button type="button" class="btn btn-primary btn-lg" (click)="pingDevice(ping.deviceId)">Ping</button>
+         </div>
+       </div>
+ </div>
+</div>
+
+</div>
+</div>
+</div>

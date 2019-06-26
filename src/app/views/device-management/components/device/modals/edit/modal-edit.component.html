@@ -1,0 +1,68 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12" style="padding: 15px;">
+      <form [formGroup]="deviceForm" (ngSubmit)="onSave()">
+        <h3>Edit Device</h3>
+          <hr />
+            <div class="form-group">
+              <label>Name:</label>
+              <input 
+                class="form-control" 
+                type="text" 
+                name="name" 
+                placeholder="Enter name" 
+                formControlName="name"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                />
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required" class="error-message">Name is required</div>
+                  <div *ngIf="f.name.errors.minlength" class="error-message">Name must have at least 3 characters</div>
+                  <div *ngIf="f.name.errors.maxlength" class="error-message">Name must have maximum 100 characters</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description:</label>
+              <textarea 
+                class="form-control" 
+                name="description" 
+                placeholder="Enter device description" 
+                formControlName="description"
+                [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+                ></textarea>
+              <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                  <div *ngIf="f.description.errors.required" class="error-message">Description is required</div>
+                  <div *ngIf="f.description.errors.minlength" class="error-message">Description must have at least 5 characters</div>
+                  <div *ngIf="f.description.errors.maxlength" class="error-message">Description must have maximum 250 characters</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Type:</label>
+              <select 
+                class="form-control" 
+                name="deviceTypeId"
+                formControlName="deviceTypeId"
+                [ngClass]="{ 'is-invalid': submitted && f.deviceTypeId.errors }"
+                >
+                <option value="0" disabled selected>Select type</option>
+                <option 
+                  *ngFor="let type of types"
+                  value={{type.deviceTypeId}}>
+                    {{ type.name }}
+                </option>
+              </select>
+            <div *ngIf="submitted && f.deviceTypeId.errors" class="invalid-feedback">
+                <div *ngIf="f.deviceTypeId.errors.validDeviceType" class="error-message">Device Type is required</div>
+            </div>
+            </div>
+            <br>
+          <hr />
+            <br>
+        <input type="submit" name="submit" class="btn btn-primary float-right" value="Save" />
+      </form>
+      <form (ngSubmit)="onDelete()">
+        <input type="submit" name="submit" class="btn btn-danger" value="Delete" />
+        <input type="button" name="cancel" (click)="cancelEditing()" class="btn btn-warning cancel-button" value="Cancel" />
+      </form>
+    </div>
+  </div>
+</div>

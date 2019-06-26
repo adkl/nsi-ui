@@ -1,0 +1,15 @@
+<div class="col-12">
+    <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="selectedTitle" (ngModelChange)="changedSearchText()"
+         placeholder="Search by template title...">
+        <div class="input-group-append">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+        </div>
+    </div>
+</div>
+
+<div class="col-4">
+    <ng-select [items]="folders" [(ngModel)]="selectedFolderId" (ngModelChange)="changedFolder()"
+      bindLabel="name" bindValue="id" placeholder="Select folder...">
+    </ng-select>
+</div>

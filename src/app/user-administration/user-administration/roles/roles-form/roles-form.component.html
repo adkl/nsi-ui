@@ -1,0 +1,37 @@
+<div class="card">
+  <div *ngIf="edit" class="card-header">
+    <i class="fa fa-user-o" aria-hidden="true"></i> Edit Role
+</div>
+<div *ngIf="!edit" class="card-header">
+  <i class="fa fa-user-o" aria-hidden="true"></i> Add Role    
+</div>
+  <div class="card-body">
+      <form name="form" (ngSubmit)="onSubmit()" #f="ngForm">
+        <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><em class="fa fa-user-circle-o"></em></span>
+                </div>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Name" [(ngModel)]="model.name" #Name="ngModel">
+              </div>
+          </div>
+          <label class="col col-form-label" for="select2">Permissions:</label>
+          <div class="col"> 
+            <div class="form-group row">
+              <select id="rolePermission" name="rolePermission" class="form-control" size="4" multiple [(ngModel)]="model.rolePermission" #rolePermission="ngModel">
+                <option *ngFor="let perm of activePermissions" [value]="perm.id">{{perm.code}}</option>
+              </select>
+            </div>
+          </div>
+      <div class="form-group form-actions">
+          <button type="submit" class="btn btn-primary float-right">Submit</button>
+        </div>
+        </div>
+   
+      </div>
+      </form>
+
+  </div>
+</div>
